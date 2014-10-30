@@ -16,7 +16,21 @@
 
     = speaker_fields.hidden_field :person_id, value: speaker.person_id
 
+    = speaker_fields.input :location,
+      label: 'Where do you live?'
+
+    = speaker_fields.input :headshot_url,
+      label: 'Headshot',
+      hint: '400 x 400 minimum, png ideal, naming convention lastName_firstName.'
+
     = speaker_fields.input :bio, maxlength: :lookup,
       placeholder: 'Bio for the event program.',
       input_html: { value: speaker.bio, rows: 4 },
       hint: 'Bio is limited to 500 characters.'
+
+    = speaker_fields.input :website,
+      label: 'Website, blog, etc.'
+    = speaker_fields.input :github,
+      label: 'GitHub Username'
+    = speaker_fields.input :twitter,
+      label: 'Twitter Username'
