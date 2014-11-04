@@ -6,7 +6,9 @@ class Speaker < ActiveRecord::Base
 
   delegate :name, :email, :gravatar_hash, to: :person
 
-  validates :bio, length: { maximum: 500 }
+  validates :bio, presence: true, length: { maximum: 500 }
+  validates :headshot_url, length: { minimum: 10}
+  validates :location, :github, presence: true
 end
 
 # == Schema Information
