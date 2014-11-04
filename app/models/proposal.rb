@@ -223,6 +223,7 @@ end
 #  created_at         :datetime
 #  updated_at         :datetime
 #  new_talk           :boolean
+#  prior_experience   :text
 #
 # Indexes
 #
