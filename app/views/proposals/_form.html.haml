@@ -12,6 +12,10 @@
     = f.input :new_talk,
       label: 'Is this a new talk?'
 
+    = f.input :prior_experience, input_html: { rows: 5 },
+      label: 'Are there any recordings of you giving talks online? Links please.',
+      placeholder: 'Link to both this talk elsewhere and recordings of other talks.'
+
     = f.input :details, input_html: { class: 'watched', rows: 10 },
       placeholder: 'Explain the theme and flow of your talk. What are the intended audience takeways?',
       hint: 'Include any pertinent details such as outlines, outcomes or intended audience.'
