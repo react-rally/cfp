@@ -216,11 +216,12 @@ end
 #  abstract           :text
 #  details            :text
 #  pitch              :text
+#  last_change        :text
+#  confirmation_notes :text
 #  confirmed_at       :datetime
 #  created_at         :datetime
 #  updated_at         :datetime
-#  last_change        :text
-#  confirmation_notes :text
+#  new_talk           :boolean
 #
 # Indexes
 #
