@@ -18,6 +18,7 @@ class Proposal < ActiveRecord::Base
 
   validates :title, :abstract, presence: true
   validates :abstract, length: { maximum: 600 }
+  validates_associated :speakers
 
   serialize :last_change
 
