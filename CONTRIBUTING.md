@@ -15,9 +15,6 @@ The [issue tracker](issues) is the preferred channel for [bug reports](#bug-repo
 [features requests](#feature-requests) and [submitting pull requests](#pull-requests), 
 but please respect the following restrictions:
 
-* Please **do not** use the issue tracker for personal support requests (use
-  [Stack Overflow](http://stackoverflow.com) or IRC).
-
 * Please **do not** derail or troll issues. Keep the discussion on topic and
   respect the opinions of others.
 
@@ -26,7 +23,7 @@ but please respect the following restrictions:
 A bug is a _demonstrable problem_ that is caused by the code in the repository.
 Good bug reports are extremely helpful - thank you!
 
-Guidelines for bug reports:
+**Guidelines for bug reports:**
 
 1. **Use the GitHub issue search** &mdash; check if the issue has already been
    reported.
@@ -61,7 +58,6 @@ Example:
 > causing the bug, and potential solutions (and your opinions on their
 > merits).
 
-
 ## Feature requests
 
 Feature requests are welcome. But take a moment to find out whether your idea
@@ -72,7 +68,6 @@ provide as much detail and context as possible.
 Specifically, the CFP-App needs to serve many conference organizers' needs so 
 bring up your idea to see if it's applicable to enough organizers to be added
 into the project.
-
 
 ## Pull requests
 
