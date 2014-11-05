@@ -43,7 +43,7 @@ Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is
 
 View our CONTRIBUTING.md file to see guidelines on how to make CFP App better.
 
-## Contributors
+### Contributors
 
 The CFP App was initially authored by Ben Scofield.  Marty Haught took over the project and lead development for the CFP for RailsConf 2014.  Below are the others that participating on the project while it was a private project.  
 
