@@ -224,6 +224,7 @@ end
 #  updated_at         :datetime
 #  new_talk           :boolean
 #  prior_experience   :text
+#  video_url          :string(255)
 #
 # Indexes
 #
