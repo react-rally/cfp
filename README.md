@@ -5,30 +5,30 @@ The EmberConf cfp-app is a fork of the one originally developed by Ruby Central 
 The app was written with a Heroku deployment stack in mind.  The only two add-ons you'll need is a database and an email sending service.  We used SendGrid but it shouldn't matter.  You can deploy it wherever you'd like assuming it can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
 
 ## Setup
-* Required Items
+
+### Required Items
 
 Make sure you have Ruby 2.1 and Postgres installed in your environment.  This is a Rails 4.1 app and uses bundler to install all required gems.  We are also making the assumption that you're familiar with how Rails apps and setup and deployed.  If this is not the case then you'll want to refer to documentation that will bridge any gaps in the instructions below.
 
-* Install gem requirements
+### Install gem requirements
 
     bundle install
 
-* Duplicate and edit environment variables
+### Duplicate and edit environment variables
 
     cp env-sample .env
   
 [Omniauth](http://intridea.github.io/omniauth/) is set up to use Twitter and Github for logins in production.  You'll want to put your own key and secret in for both.  Other environment variables will include your postgres user and Rails' secret_token.
 
-* Duplicate and edit database.yml
+### Duplicate and edit database.yml
 
     cp config/database_example.yml config/database.yml
-        
 
-* Build dev database
+### Build dev database
 
     bundle exec rake db:create db:migrate db:seed
     
-NOTE: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
+**NOTE**: Seed will make an admin user with an email of an@admin.com to get started.  There is a special, development only login method in Omniauth that you can use to test it out.
 
 ### Environment variables
     POSTGRES_USER (dev/test only)
