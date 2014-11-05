@@ -1,11 +1,8 @@
-# CFP-App
+# About
 
-This is a Ruby on Rails application that you can deploy to manage your conference's call for proposal (CFP) and program.  It was written by Ruby Central to run the CFPs for RailsConf and RubyConf.  We've open sourced it so other organizers can use it themselves.
-
-The CFP app is not the conference website but just to place for potential speakers to submit talks for your CFP.  You'll end up pointing those interested in submitting a talk to your deployed version of this application.  From there speakers can submit their talk, track their talk's progress and update their profile and talk details as need be.  As an organizer you can have a group of reviewers that blindly look over proposals, give feedback, tag and rate them.  You can have a different group of organizers that then sift through talks, curate your program, send out acceptance emails and manage the program.  We'll get into the details of the specifics of all of these things below.
+The EmberConf cfp-app is a fork of the one originally developed by Ruby Central for RailsConf and RubyConf. When changes are not specific to EmberConf, we aim to submit them back to RubyCentral for possible inclusion.
 
 The app was written with a Heroku deployment stack in mind.  The only two add-ons you'll need is a database and an email sending service.  We used SendGrid but it shouldn't matter.  You can deploy it wherever you'd like assuming it can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.
-
 
 ## Setup
 * Required Items
@@ -59,4 +56,8 @@ The CFP App was initially authored by Ben Scofield.  Marty Haught took over the 
 
 It was open sourced in May 2014 and moved to its new home.  Please view the contributor graph for those that have contributed since it was open sourced.
 
+The EmberConf fork has been coded and maintained by:
 
+* Ryan MdDonald
+* Leah Silber
+* Robert Jackson
