@@ -1,5 +1,9 @@
 CFPApp::Application.routes.draw do
 
+  # Redirects
+  get "/events/emberconf-2014", to: redirect('/events/emberconf-2015')
+
+
   resources :notifications, only: [ :index, :show ]
 
   root 'home#show'
