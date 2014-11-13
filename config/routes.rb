@@ -1,6 +1,7 @@
 CFPApp::Application.routes.draw do
 
   # Redirects
+  get "/events/emberconf-2014", to: redirect('/events/emberconf-2015')
   get "/events/emberconf-2014(*all)", to: redirect('/events/emberconf-2015%{all}')
 
 
