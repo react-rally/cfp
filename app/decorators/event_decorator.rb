@@ -14,6 +14,14 @@ class EventDecorator < ApplicationDecorator
     message
   end
 
+  def proposals_unrated_message
+
+    proposals_count = object.proposals.size
+
+    "#{proposals.unrated.count}/#{proposals_count}"
+
+  end
+
   def path_for(person)
     path = if person && person.organizer_for_event?(object)
       h.organizer_event_proposals_path(object)
