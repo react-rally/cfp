@@ -7,10 +7,10 @@
       %aside#event_statistics
         %h3 Statistics
         %dl.dl-horizontal
-          %dt Proposals Rated:
+          %dt Proposals You've Rated:
           %dd= event.proposals_rated_message
-          %dt Unrated Proposals:
-          %dd= event.proposals.unrated.count
+          %dt Proposals Nobody Has Rated:
+          %dd= event.proposals_unrated_message
   .row
     .col-md-10
       %small <em>Hint:</em> Hold <kbd>shift</kbd> and click sorting arrows to sort by multiple columns
