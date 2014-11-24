@@ -21,6 +21,7 @@
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2daddc', endColorstr='#ff0271bf', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  margin-right: 10px;
 }
 
 .btn-twitter:hover,
