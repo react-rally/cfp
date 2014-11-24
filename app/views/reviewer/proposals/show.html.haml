@@ -13,6 +13,9 @@
       %br
       %date#updated_subheader
         = proposal.updated_in_words
+      %br
+      %br
+      == Number of speakers: #{proposal.speakers.count}
 
       .tags= proposal.tags
   .row
