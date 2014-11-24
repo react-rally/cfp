@@ -74,7 +74,7 @@ class Organizer::ProposalDecorator < ProposalDecorator
                  data: {
                    confirm:
                      'Finalizing the state will prevent any additional state changes, ' +
-                     'and emails will be sent to all speakers. Are you sure you want to continue?'
+                     'and emails will be sent to all speakers on this particular proposal. Are you sure you want to continue?'
                  },
                  type: 'btn-warning',
                  hidden:  object.finalized? || object.draft?,
