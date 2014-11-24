@@ -10,7 +10,11 @@ class SpeakerDecorator < ApplicationDecorator
   end
 
   def name_and_email
-    "#{object.name} (#{object.email})"
+    if object.email.present?
+      "#{object.name} (#{object.email})"
+    else
+      object.name
+    end
   end
 
   def bio
