@@ -15,11 +15,33 @@
           id: 'speaker_gravatar')
         %br
         %b Name:
+        %br
         = speaker.name
       %p
         %b Email:
+        %br
         = mail_to(speaker.email)
       %p
         %b Bio:
         %br
         = speaker.person.bio
+
+      %p
+        %b GitHub:
+        %br
+        = speaker.github
+
+      %p
+        %b Twitter:
+        %br
+        = speaker.twitter
+
+      %p
+        %b Past Speaking Experience:
+        %br
+        = speaker.speaking_experience
+
+      %p
+        %b Location:
+        %br
+        = speaker.location
