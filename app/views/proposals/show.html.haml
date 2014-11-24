@@ -22,14 +22,15 @@
 
   .row
     .col-md-4
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
+      = render partial: 'proposals/contents', locals: { proposal: proposal, preview: false }
 
     .col-md-4
       %h3 Speakers
       = render proposal.speakers
 
       - if (proposal.has_speaker?(current_user))
-        %h3 Invited Speakers
+        - if invitations.present?
+          %h3 Invited Speakers
         - invitations.each do |invitation|
           .clearfix
             %ul.invitation

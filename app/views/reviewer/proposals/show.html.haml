@@ -17,7 +17,7 @@
       .tags= proposal.tags
   .row
     .col-md-4
-      = render partial: 'proposals/contents', locals: { proposal: proposal }
+      = render partial: 'proposals/contents', locals: { proposal: proposal, preview: false }
 
     .col-md-4
       %h3 Public Comments
