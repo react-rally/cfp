@@ -1,9 +1,9 @@
 .row
   %header
-    .col-md-3
-      %h3 Participants
+    .col-md-4
+      %h3 Reviewers and Organizers
       = link_to 'view speakers', organizer_event_speakers_path(event)
-    .col-sm-1.col-sm-offset-6
+    .col-sm-1.col-sm-offset-4
       = link_to 'Add New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
       = new_participant_invitation_button
       = link_to 'Manage Participant Invitations',
