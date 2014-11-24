@@ -3,10 +3,10 @@
     .col-md-4
       %h3 Reviewers and Organizers
       = link_to 'view speakers', organizer_event_speakers_path(event)
-    .col-sm-1.col-sm-offset-4
-      = link_to 'Add New Participant', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
+    .col-sm-2.col-sm-offset-5.admin-page-btn
+      = link_to 'Convert Existing User', '#', class: 'btn btn-primary', data: { toggle: 'modal', target: "#new-participant-event-#{event.id}" }
       = new_participant_invitation_button
-      = link_to 'Manage Participant Invitations',
+      = link_to 'Manage Invitations',
         organizer_event_participant_invitations_path(event), class: 'btn btn-primary'
 .row
   .col-md-11

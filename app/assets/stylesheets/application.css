@@ -20,3 +20,7 @@
 .badge.badge-important {
   background-color: red;
 }
+
+.admin-page-btn a {
+  width: 100%;
+}
