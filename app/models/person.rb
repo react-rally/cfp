@@ -112,7 +112,11 @@ class Person < ActiveRecord::Base
   end
 
   def role_names
-    self.participants.collect {|p| p.role}.uniq.join(", ")
+    if self.participants.empty?
+      "submitter"
+    else
+      self.participants.collect {|p| p.role}.uniq.join(", ")
+    end
   end
 
 end
