@@ -98,7 +98,7 @@ class ProposalsController < ApplicationController
     params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, :new_talk, :prior_experience, :video_url,
                                      comments_attributes: [:body, :proposal_id, :person_id],
                                      speakers_attributes: [:bio, :person_id, :id, :location, :headshot_url,
-                                                           :website, :twitter, :github])
+                                                           :website, :twitter, :github, :speaking_experience])
   end
 
   def require_speaker
