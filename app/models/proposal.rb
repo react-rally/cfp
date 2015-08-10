@@ -249,25 +249,24 @@ end
 #
 # Table name: proposals
 #
-#  id                 :integer          not null, primary key
-#  event_id           :integer
-#  state              :string(255)      default("submitted")
-#  uuid               :string(255)
-#  title              :string(255)
-#  abstract           :text
-#  details            :text
-#  pitch              :text
-#  last_change        :text
-#  confirmation_notes :text
-#  confirmed_at       :datetime
-#  created_at         :datetime
-#  updated_at         :datetime
-#  last_change        :text
-#  confirmation_notes :text
-#  proposal_data      :text
-#  new_talk           :boolean
-#  prior_experience   :text
-#  video_url          :string(255)
+#  id                    :integer          not null, primary key
+#  event_id              :integer
+#  state                 :string(255)      default("submitted")
+#  uuid                  :string(255)
+#  title                 :string(255)
+#  abstract              :text
+#  details               :text
+#  pitch                 :text
+#  last_change           :text
+#  confirmation_notes    :text
+#  confirmed_at          :datetime
+#  created_at            :datetime
+#  updated_at            :datetime
+#  new_talk              :boolean
+#  prior_experience      :text
+#  video_url             :string(255)
+#  updated_by_speaker_at :datetime
+#  proposal_data         :text
 #
 # Indexes
 #
