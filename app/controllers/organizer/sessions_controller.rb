@@ -21,6 +21,7 @@ class Organizer::SessionsController < Organizer::SchedulesController
   end
 
   def index
+    @rooms = @event.rooms.by_grid_position
     respond_to do |format|
       format.html
       format.csv { send_data sessions.to_csv }

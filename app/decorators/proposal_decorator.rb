@@ -102,7 +102,7 @@ class ProposalDecorator < ApplicationDecorator
   end
 
   def updated_in_words
-    "updated #{h.time_ago_in_words(object.updated_at)} ago"
+    "updated #{h.time_ago_in_words(object.updated_by_speaker_at)} ago"
   end
 
   def created_in_words
@@ -111,6 +111,10 @@ class ProposalDecorator < ApplicationDecorator
 
   def title_input(form)
     form.input :title, placeholder: 'Title of the talk'
+  end
+
+  def speaker_input(form)
+    form.input :speaker, placeholder: 'Speaker Name'
   end
 
   def abstract_input(form)

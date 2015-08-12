@@ -5,9 +5,6 @@
     display: inline;
   }
 
-  h1 {
-    float: left;
-  }
   span {
     &.status {
       float: right;
@@ -150,4 +147,3 @@ span.disabled-state {
   }
   dd { margin-left: 150px; }
 }
-

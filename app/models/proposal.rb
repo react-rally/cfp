@@ -5,8 +5,8 @@ class Proposal < ActiveRecord::Base
 
   has_many :public_comments, dependent: :destroy
   has_many :internal_comments, dependent: :destroy
-  has_many :ratings,  dependent: :destroy
-  has_many :speakers, -> { order created_at: :asc}, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+  has_many :speakers, -> { order created_at: :asc }, dependent: :destroy
   has_many :taggings, dependent: :destroy
   has_many :proposal_taggings, -> { proposal }, class_name: 'Tagging'
   has_many :review_taggings, -> { review }, class_name: 'Tagging'
@@ -21,15 +21,18 @@ class Proposal < ActiveRecord::Base
   validates_associated :speakers
 
   serialize :last_change
+  serialize :proposal_data, Hash
 
   attr_accessor :tags, :review_tags, :updating_person
+  attr_accessor :video_url, :slide_url
 
   accepts_nested_attributes_for :public_comments, reject_if: Proc.new { |comment_attributes| comment_attributes[:body].blank? }
   accepts_nested_attributes_for :speakers
 
+
   before_create :set_uuid
   before_update :save_attr_history
-  after_save :save_tags, :save_review_tags
+  after_save :save_tags, :save_review_tags, :touch_updated_by_speaker_at
 
   scope :accepted, -> { where(state: ACCEPTED) }
   scope :confirmed, -> { where("confirmed_at IS NOT NULL") }
@@ -39,11 +42,11 @@ class Proposal < ActiveRecord::Base
   scope :rated, -> { where('id IN ( SELECT proposal_id FROM ratings )') }
   scope :scheduled, -> { joins(:session) }
   scope :waitlisted, -> { where(state: WAITLISTED) }
-  scope :available, ->do
-    includes(:session).where(sessions: { proposal_id: nil }, state: ACCEPTED).order(:title)
+  scope :available, -> do
+    includes(:session).where(sessions: {proposal_id: nil}, state: ACCEPTED).order(:title)
   end
   scope :for_state, ->(state) do
-    where(state: state).order(:title).includes(:event, { speakers: :person }, :review_taggings)
+    where(state: state).order(:title).includes(:event, {speakers: :person}, :review_taggings)
   end
 
   scope :emails, -> { joins(speakers: :person).pluck(:email).uniq }
@@ -69,11 +72,36 @@ class Proposal < ActiveRecord::Base
              event.id, ['organizer', 'reviewer'], id, id).uniq
   end
 
+  def video_url
+    proposal_data[:video_url]
+  end
+
+  def slides_url
+    proposal_data[:slides_url]
+  end
+
+  def video_url=(video_url)
+    proposal_data[:video_url] = video_url
+  end
+
+  def slides_url=(slides_url)
+    proposal_data[:slides_url] = slides_url
+  end
+
+  def custom_fields=(custom_fields)
+    proposal_data[:custom_fields] = custom_fields
+  end
+
+  def custom_fields
+    proposal_data[:custom_fields] || {}
+  end
+
   def update_state(new_state)
     state_string = new_state.to_s
     state_string.gsub!("_", " ") if state_string.include?('_')
     self.update(state: state_string)
   end
+
 
   def finalize
     update_state(SOFT_TO_FINAL[state]) if SOFT_TO_FINAL.has_key?(state)
@@ -83,7 +111,7 @@ class Proposal < ActiveRecord::Base
     self.update(state: WITHDRAWN)
 
     Notification.create_for(reviewers, proposal: self,
-      message: "Proposal, #{title}, withdrawn")
+                            message: "Proposal, #{title}, withdrawn")
   end
 
   def draft?
@@ -130,7 +158,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def was_rated_by_person?(person)
-    ratings.any?{|r| r.person_id == person.id}
+    ratings.any? { |r| r.person_id == person.id }
   end
 
   def tags
@@ -151,12 +179,19 @@ class Proposal < ActiveRecord::Base
       field_names = last_change.join(', ')
 
       Notification.create_for(reviewers, proposal: self,
-        message: "Proposal, #{old_title}, updated [ #{field_names} ]")
+                              message: "Proposal, #{old_title}, updated [ #{field_names} ]")
     end
   end
 
   def has_reviewer_activity?
     ratings.present? || has_reviewer_comments?
+  end
+
+  def update_without_touching_updated_by_speaker_at(params)
+    @dont_touch_updated_by_speaker_at = true
+    success = update_attributes(params)
+    @dont_touch_updated_by_speaker_at = false
+    success
   end
 
   private
@@ -166,6 +201,7 @@ class Proposal < ActiveRecord::Base
       update_tags(proposal_taggings, @tags, false)
     end
   end
+  @dont_touch_updated_by_speaker_at
 
   def save_review_tags
     if @review_tags
@@ -176,21 +212,21 @@ class Proposal < ActiveRecord::Base
   def update_tags(old, new, internal)
     old.destroy_all
     tags = new.uniq.sort.map do |t|
-      { tag: t.strip, internal: internal } if t.present?
+      {tag: t.strip, internal: internal} if t.present?
     end.compact
     taggings.create(tags)
   end
 
   def has_public_reviewer_comments?
-    public_comments.reject {|comment| speakers.include?(comment.person_id)}.any?
+    public_comments.reject { |comment| speakers.include?(comment.person_id) }.any?
   end
 
   def has_internal_reviewer_comments?
-    internal_comments.reject {|comment| speakers.include?(comment.person_id)}.any?
+    internal_comments.reject { |comment| speakers.include?(comment.person_id) }.any?
   end
 
   def save_attr_history
-    if updating_person && updating_person.organizer_for_event?(event)
+    if updating_person && updating_person.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
       # Erase the record of last change if the proposal is updated by an
       # organizer
       self.last_change = nil
@@ -201,7 +237,11 @@ class Proposal < ActiveRecord::Base
   end
 
   def set_uuid
-    self.uuid = Digest::SHA1.hexdigest([event_id, title, created_at, rand(100)].map(&:to_s).join('-'))[0,10]
+    self.uuid = Digest::SHA1.hexdigest([event_id, title, created_at, rand(100)].map(&:to_s).join('-'))[0, 10]
+  end
+
+  def touch_updated_by_speaker_at
+    touch(:updated_by_speaker_at) unless @dont_touch_updated_by_speaker_at
   end
 end
 
@@ -222,6 +262,9 @@ end
 #  confirmed_at       :datetime
 #  created_at         :datetime
 #  updated_at         :datetime
+#  last_change        :text
+#  confirmation_notes :text
+#  proposal_data      :text
 #  new_talk           :boolean
 #  prior_experience   :text
 #  video_url          :string(255)

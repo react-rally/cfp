@@ -23,7 +23,7 @@ class Organizer::ProposalMailerTemplate
   def format_paragraphs
     @template = @template
       .split(/(?:\r?\n){2,}/)
-      .map { |line| "<p>#{line}</p>" }
+      .map { |line| "#{line}" }
       .join("\n")
   end
 

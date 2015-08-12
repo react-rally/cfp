@@ -2,6 +2,7 @@ class Speaker < ActiveRecord::Base
   belongs_to :proposal
   belongs_to :person
 
+
   has_many :proposals, through: :person
 
   delegate :name, :email, :gravatar_hash, to: :person

@@ -1,5 +1,5 @@
 class Organizer::ProposalsController < Organizer::ApplicationController
-  before_filter :require_proposal, except: [ :index, :new, :create ]
+  before_filter :require_proposal, except: [:index, :new, :create, :edit_all]
 
   decorates_assigned :proposal, with: Organizer::ProposalDecorator
 
@@ -19,20 +19,21 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   end
 
   def index
-    proposals = @event.proposals.includes(:review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
+    proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
 
-    session[:prev_page] = { name: 'Proposals', path: organizer_event_proposals_path }
+    session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
 
     taggings_count = Tagging.count_by_tag(@event)
 
     proposals = Organizer::ProposalsDecorator.decorate(proposals)
     respond_to do |format|
-      format.html { render locals: { event: @event, proposals: proposals, taggings_count: taggings_count} }
+      format.html { render locals: {event: @event, proposals: proposals, taggings_count: taggings_count} }
       format.csv { render text: proposals.to_csv }
     end
   end
 
   def show
+    set_title(@proposal.title)
     other_proposals = []
     @proposal.speakers.each do |speaker|
       speaker.proposals.each do |p|
@@ -42,18 +43,20 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       end
     end
 
+    current_user.notifications.mark_as_read_for_proposal(reviewer_event_proposal_path(@event, @proposal))
     render locals: {
-      speakers: @proposal.speakers.decorate,
-      other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
-      rating: current_user.rating_for(@proposal)
-    }
+             speakers: @proposal.speakers.decorate,
+             other_proposals: Organizer::ProposalsDecorator.decorate(other_proposals),
+             rating: current_user.rating_for(@proposal)
+           }
   end
 
   def edit
   end
 
+
   def update
-    if @proposal.update_attributes(proposal_params)
+    if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
       redirect_to organizer_event_proposals_path(slug: @event.slug)
     else
@@ -70,6 +73,8 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def new
     @proposal = @event.proposals.new
+    @speaker = @proposal.speakers.build
+    @person = @speaker.build_person
   end
 
   def create
@@ -88,19 +93,19 @@ class Organizer::ProposalsController < Organizer::ApplicationController
 
   def proposal_params
     # add updating_person to params so Proposal does not update last_change attribute when updating_person is organizer_for_event?
-    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch,
+    params.require(:proposal).permit(:title, {review_tags: []}, :abstract, :details, :pitch, :slides_url, :video_url, custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
-                                     speakers_attributes: [:bio, :person_id, :id]).merge(updating_person: current_user)
+                                     speakers_attributes: [:bio, :person_id, :id, person_attributes: [:id, :name, :email]])
   end
 
   def send_state_mail(state)
     case state
-    when Proposal::State::ACCEPTED
-      Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
-    when Proposal::State::REJECTED
-      Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
-    when Proposal::State::WAITLISTED
-      Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
+      when Proposal::State::ACCEPTED
+        Organizer::ProposalMailer.accept_email(@event, @proposal).deliver
+      when Proposal::State::REJECTED
+        Organizer::ProposalMailer.reject_email(@event, @proposal).deliver
+      when Proposal::State::WAITLISTED
+        Organizer::ProposalMailer.waitlist_email(@event, @proposal).deliver
     end
   end
 end

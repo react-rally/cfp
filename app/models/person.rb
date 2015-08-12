@@ -23,8 +23,10 @@ class Person < ActiveRecord::Base
   has_many :notifications, dependent: :destroy
   has_many :proposals, through: :speakers, source: :proposal
 
+
   validates :email, uniqueness: { case_insensitive: true }, allow_nil: true
   validates :bio, length: { maximum: 500 }
+  validates :name, :presence => true, allow_nil: true
 
   def self.authenticate(auth, current_user = nil)
     provider = auth['provider']

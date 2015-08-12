@@ -3,26 +3,34 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
 
   def create
     person = Person.where(email: params[:email]).first
-    participant = @event.participants.build(participant_params.merge(person: person))
+    if person.nil?
+      participant_invitation =
+        @event.participant_invitations.build(participant_params.merge(email: params[:email]))
 
-    if participant.save
-      flash[:info] = 'Your participant was added.'
-    else
-      flash[:danger] = "There was a problem saving your participant;"
-      if participant.errors[:person]
-        flash[:danger] += " no person could be found for email '#{params[:email]}'."
+      if participant_invitation.save
+        ParticipantInvitationMailer.create(participant_invitation).deliver
+        flash[:info] = 'Participant invitation successfully sent.'
       else
-        flash[:danger] += ' please try again.'
+        flash[:danger] = 'There was a problem creating your invitation.'
       end
+      redirect_to organizer_event_participant_invitations_path(@event)
+    else
+      participant = @event.participants.build(participant_params.merge(person: person))
+
+      if participant.save
+        flash[:info] = 'Your participant was added.'
+      else
+        flash[:danger] = "There was a problem saving your participant. Please try again"
+      end
+      redirect_to organizer_event_path(@event)
     end
-    redirect_to organizer_event_path(@event)
   end
 
   def update
     participant = Participant.find(params[:id])
     participant.update(participant_params)
 
-    flash[:info] = "You have successfully changed the role for your participant."
+    flash[:info] = "You have successfully changed your participant."
     redirect_to organizer_event_path(@event)
   end
 
@@ -42,6 +50,6 @@ class Organizer::ParticipantsController < Organizer::ApplicationController
   private
 
   def participant_params
-    params.require(:participant).permit(:role)
+    params.require(:participant).permit(:role, :notifications)
   end
 end

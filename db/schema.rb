@@ -47,6 +47,8 @@ ActiveRecord::Schema.define(version: 20141105212258) do
     t.hstore   "speaker_notification_emails", default: {"accept"=>"", "reject"=>"", "waitlist"=>""}
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "archived",                    default: false
+    t.text     "custom_fields"
   end
 
   add_index "events", ["slug"], name: "index_events_on_slug", using: :btree
@@ -68,11 +70,11 @@ ActiveRecord::Schema.define(version: 20141105212258) do
 
   create_table "notifications", force: true do |t|
     t.integer  "person_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "message"
     t.datetime "read_at"
     t.string   "target_path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   add_index "notifications", ["person_id"], name: "index_notifications_on_person_id", using: :btree
@@ -94,6 +96,7 @@ ActiveRecord::Schema.define(version: 20141105212258) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "notifications", default: true
   end
 
   add_index "participants", ["event_id"], name: "index_participants_on_event_id", using: :btree
@@ -111,20 +114,22 @@ ActiveRecord::Schema.define(version: 20141105212258) do
 
   create_table "proposals", force: true do |t|
     t.integer  "event_id"
-    t.string   "state",              default: "submitted"
+    t.string   "state",                 default: "submitted"
     t.string   "uuid"
     t.string   "title"
     t.text     "abstract"
     t.text     "details"
     t.text     "pitch"
-    t.text     "last_change"
-    t.text     "confirmation_notes"
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "new_talk"
     t.text     "prior_experience"
     t.string   "video_url"
+    t.text     "last_change"
+    t.text     "confirmation_notes"
+    t.datetime "updated_by_speaker_at"
+    t.text     "proposal_data"
   end
 
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
@@ -150,6 +155,7 @@ ActiveRecord::Schema.define(version: 20141105212258) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "grid_position"
   end
 
   add_index "rooms", ["event_id"], name: "index_rooms_on_event_id", using: :btree
@@ -168,8 +174,8 @@ ActiveRecord::Schema.define(version: 20141105212258) do
 
   create_table "sessions", force: true do |t|
     t.integer  "conference_day"
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.time     "start_time"
+    t.time     "end_time"
     t.text     "title"
     t.text     "description"
     t.text     "presenter"

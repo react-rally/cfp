@@ -5,9 +5,19 @@ describe Reviewer::ProposalsController, type: :controller do
   let(:proposal) { create(:proposal) }
   let(:event) { proposal.event }
   let(:reviewer) { create(:person, :reviewer) }
-  let!(:speaker) { create(:speaker, proposal: proposal) }
+  let(:speaker) { create(:speaker, proposal: proposal) }
+
 
   before { login reviewer }
+
+  describe "GET 'show'" do
+    it "marks all notifications for this proposal as read" do
+      Notification.create_for([reviewer], proposal: proposal, message: "A fancy notification")
+      expect{
+        get :show, {event_id: event.id, uuid: proposal.uuid}
+      }.to change {reviewer.notifications.unread.count}.by(-1)
+    end
+  end
 
   describe '#index' do
     it "should respond" do
@@ -31,5 +41,4 @@ describe Reviewer::ProposalsController, type: :controller do
       expect(proposal.review_tags).to_not eq([ 'tag' ])
     end
   end
-
 end

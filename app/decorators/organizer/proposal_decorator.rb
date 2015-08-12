@@ -48,6 +48,11 @@ class Organizer::ProposalDecorator < ProposalDecorator
       end
   end
 
+  def confirm_link
+    h.link_to 'confirmation page',
+              h.confirm_proposal_url(slug: object.event.slug, uuid: object)
+  end
+
   def small_state_buttons
     unless proposal.finalized?
       state_buttons(
@@ -56,6 +61,10 @@ class Organizer::ProposalDecorator < ProposalDecorator
         small: true
       )
     end
+  end
+
+  def organizer_confirm
+      object.state == "accepted" && object.confirmed_at == nil
   end
 
   private

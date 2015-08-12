@@ -1,11 +1,13 @@
 CFPApp::Application.routes.draw do
-
   # Redirects
-  get "/events/emberconf-2014", to: redirect('/events/emberconf-2015')
-  get "/events/emberconf-2014(*all)", to: redirect('/events/emberconf-2015%{all}')
+  get "/events/emberconf-2014", to: redirect('/events/emberconf-2016')
+  get "/events/emberconf-2014(*all)", to: redirect('/events/emberconf-2016%{all}')
+  get "/events/emberconf-2015", to: redirect('/events/emberconf-2016')
+  get "/events/emberconf-2015(*all)", to: redirect('/events/emberconf-2016%{all}')
 
-
-  resources :notifications, only: [ :index, :show ]
+  resources :notifications, only: [ :index, :show ] do
+    post :mark_all_as_read, on: :collection
+  end
 
   root 'home#show'
 
@@ -51,13 +53,22 @@ CFPApp::Application.routes.draw do
 	end
 
   namespace 'admin' do
-    resources :events, except: [:show, :index, :edit, :update]
+    resources :events, except: [:show, :edit, :update] do
+      post :archive
+      post :unarchive
+    end
+
     resources :people
   end
 
   namespace 'organizer' do
     resources :events, only: [:edit, :show, :update] do
+      member do
+        get :edit_custom_fields
+        put :update_custom_fields
+      end
       resources :participant_invitations, except: [ :new, :edit, :update, :show ]
+
 
       controller :program do
         get 'program' => 'program#show'
@@ -71,15 +82,23 @@ CFPApp::Application.routes.draw do
       resources :tracks, only: [:create, :destroy]
       resources :sessions, except: :show
       resources :proposals, param: :uuid do
+        resources :speakers, only: [:new, :create]
         post :finalize
         post :update_state
       end
 
+
       controller :speakers do
         get :speaker_emails, action: :emails
       end
-      resources :speakers, only: [:index, :show]
+      resources :speakers, only: [:index, :show, :edit, :update, :destroy] do
+        member do
+          get :profile, to: "profiles#edit", as: :edit_profile
+          patch :profile, to: "profiles#update", as: :update_profile
+        end
+      end
     end
+
   end
 
   namespace 'reviewer' do

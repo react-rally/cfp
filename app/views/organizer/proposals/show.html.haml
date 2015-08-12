@@ -10,13 +10,19 @@
             =link_to(edit_organizer_event_proposal_path(proposal.event_id, proposal.uuid), class: "btn btn-primary", id: 'edit') do
               %span.glyphicon.glyphicon-edit
               Edit Proposal
+          %p
+            =link_to "Next Proposal", organizer_event_proposal_path(uuid: "PLACEHOLDER"), class: "next-proposal btn btn-primary", data: {"proposal-uuid" => proposal.uuid }
             .clearfix
             #state_buttons
               = proposal.state_buttons
+              = if proposal.organizer_confirm
+                = link_to "Confirm for Speaker", confirm_proposal_path(slug: proposal.event.slug, uuid: proposal), class: "btn btn-primary"
+
+
 
   .row
     #updated_parent.col-md-12
-      %date#updated_subheader= "updated #{time_ago_in_words(proposal.updated_at)} ago"
+      %date#updated_subheader= proposal.updated_in_words
       .tags= proposal.review_tags
   .row
     .col-md-4
@@ -30,6 +36,9 @@
         = render partial: 'organizer/proposals/speakers', locals: { speakers: proposal.speakers }
       %h3 Public Comments
       = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.public_comments }
+    - if proposal.state == 'accepted'
+      %h3 Confirmation Notes
+      = render partial: 'proposals/confirmation_notes', locals: {proposal: proposal, notes: proposal.confirmation_notes}
     .col-md-4
       %h3 Tags
       = render partial: 'shared/proposals/tags_form', locals: { event: event, proposal: proposal }
@@ -37,10 +46,16 @@
       #current_state= proposal.state_label
       #rating-form
         = render partial: 'rating_form', locals: { event: event, proposal: proposal, rating: rating }
+      - if proposal.proposal_data?
+        %h3 Video URL
+        = proposal.proposal_data[:video_url]
+        %p
+        %h3 Slides URL
+        = proposal.proposal_data[:slides_url]
       .internal-comments
         %h3 Internal Comments
         = render partial: 'proposals/comments', locals: { proposal: proposal, comments: proposal.internal_comments }
-
   .row
     .col-md-12
       .toolbox.pull-right
+
