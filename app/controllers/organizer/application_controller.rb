@@ -2,8 +2,7 @@ class Organizer::ApplicationController < ApplicationController
   before_action :require_event
   before_filter :require_organizer
 
-  private
-
+private
   def require_event
     @event = current_user &&
       current_user.organizer_events.find(params[:event_id] || params[:id])
