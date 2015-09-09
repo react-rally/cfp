@@ -6,8 +6,9 @@ describe ProposalDecorator do
 
   describe "#speaker_names" do
     it "returns speaker names as a comma separated string" do
+      speakers = create_list(:speaker, 3)
       proposal = create(:proposal)
-      speakers = create_list(:speaker, 3, proposal: proposal)
+      proposal.speakers = speakers
       names = proposal.decorate.speaker_names
       speakers.each do |speaker|
         expect(names).to match(speaker.name)
@@ -17,8 +18,9 @@ describe ProposalDecorator do
 
   describe "#speaker_emails" do
     it "returns speaker emails as a comma separated string" do
+      speakers = create_list(:speaker, 3)
       proposal = create(:proposal)
-      speakers = create_list(:speaker, 3, proposal: proposal)
+      proposal.speakers = speakers
       emails = proposal.decorate.speaker_emails
       speakers.each do |speaker|
         expect(emails).to match(speaker.email)

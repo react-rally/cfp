@@ -449,9 +449,10 @@ describe Proposal do
 
   context "When propsal has multiple speakers" do
     it "displays the oldest speaker first" do
+      secondary_speaker = create(:speaker, created_at: 2.weeks.ago)
+      primary_speaker = create(:speaker, created_at: 3.weeks.ago)
       proposal = create(:proposal)
-      secondary_speaker = create(:speaker, created_at: 2.weeks.ago, proposal: proposal)
-      primary_speaker = create(:speaker, created_at: 3.weeks.ago, proposal: proposal)
+      proposal.speakers = [primary_speaker, secondary_speaker]
 
       expect(proposal.speakers.first).to eq(primary_speaker)
     end

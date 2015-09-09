@@ -16,7 +16,8 @@ describe ProposalsController, type: :controller do
 
   describe 'POST #create' do
     let(:proposal) { build_stubbed(:proposal, uuid: 'abc123') }
-    let(:user) { create(:person) }
+    let(:user_bio){ "My Bio"}
+    let(:user) { create(:person, bio: user_bio) }
     let(:params) {
       {
         slug: event.slug,
@@ -35,15 +36,11 @@ describe ProposalsController, type: :controller do
       }
     }
 
-    before { allow(controller).to receive(:current_user).and_return(user) }
-
-    it "sets the user's bio if not is present" do
-      user.bio = nil
-      post :create, params
-      expect(user.bio).to eq('my bio')
+    before do
+      allow(controller).to receive(:current_user).and_return(user)
     end
 
-    context "With completed demgraphics" do
+    context "With completed demographics" do
       it "redirects to the new proposal" do
         allow(user).to receive(:demographics_complete?).and_return(true)
         post :create, params

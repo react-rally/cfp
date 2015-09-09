@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
   end
 
   def update_bio
-    update(bio: speakers.last.bio) if bio.blank?
+    update(bio: speakers.last.bio) if bio.blank? && speakers.present?
   end
 
   def gravatar_hash

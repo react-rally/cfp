@@ -1,9 +1,7 @@
 class PublicComment < Comment
-
   after_create :create_notifications, :send_emails
 
-  private
-
+private
   # Send emails to speakers when reviewer creates a comment
   def send_emails
     if person.reviewer_for_event?(proposal.event)
@@ -18,7 +16,6 @@ class PublicComment < Comment
   # 2. If a a reviewer/organizer leaves a comment,
   #      only the speakers get an in app and email notification.
   def create_notifications
-
     if person.reviewer_for_event?(proposal.event)
       people = proposal.speakers.map(&:person)
       message = "#{person.name} has commented on #{proposal.title}"
