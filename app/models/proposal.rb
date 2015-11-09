@@ -16,7 +16,7 @@ class Proposal < ActiveRecord::Base
   has_one :session
   has_one :track, through: :session
 
-  validates :title, :abstract, presence: true
+  validates :title, :abstract, :headshot, :github, presence: true
   validates :abstract, length: {maximum: 600}
   validates :existing_talk, inclusion: { in: [true, false], message: "Please specify whether you have given this talk before" }
 
@@ -268,6 +268,13 @@ end
 #  updated_by_speaker_at :datetime
 #  proposal_data         :text
 #  existing_talk         :boolean
+#  online_recordings     :text
+#  location              :string(255)
+#  website               :string(255)
+#  github                :string(255)
+#  twitter               :string(255)
+#  video_pitch           :string(255)
+#  headshot              :string(255)
 #
 # Indexes
 #

@@ -1,6 +1,6 @@
 = form_for [:admin, person] do |f|
   .row
-    %fieldset.col-md-6
+    %fieldset.col-md-12
       %h2 Person
       %p
       .form-group
@@ -12,10 +12,6 @@
       %p
         = f.label :bio
         = f.text_area :bio, class: 'form-control', placeholder: 'Bio', rows: 8
-
-    %fieldset.col-md-4
-      %h2 Demographics
-      %p= render :partial => 'shared/demographics', :locals => {:f => f}
 
   .row.col-md-12.form-submit
     %button.pull-right.btn.btn-success{:type => "submit"} Save

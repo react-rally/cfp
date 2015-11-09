@@ -27,6 +27,7 @@
   .row
     .col-md-4
       = render partial: 'proposals/contents', locals: { proposal: proposal }
+      = render partial: 'proposals/unblind', locals: { proposal: proposal }
 
     .col-md-4
       %h3 Other Proposals

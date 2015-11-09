@@ -2,4 +2,18 @@
   .panel-heading
     %h2.panel-title Preview
   .panel-body
-    = render partial: 'proposals/contents', locals: { proposal: proposal }
+    %h3 Abstract
+    .markdown{ data: { 'field-id' => 'proposal_abstract' } }
+      = proposal.abstract
+
+    %h3 Details
+    .markdown{ data: { 'field-id' => 'proposal_details' } }
+      = proposal.details
+
+    %h3 Pitch
+    .markdown{ data: { 'field-id' => 'proposal_pitch' } }
+      =proposal.pitch
+
+    - unless proposal.existing_talk.nil?
+      %h3 Have you given this talk before?
+      = proposal.existing_talk ? "Yes" : "No"

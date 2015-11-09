@@ -24,6 +24,9 @@
     .col-md-4
       = render partial: 'proposals/contents', locals: { proposal: proposal }
 
+      - if (proposal.has_speaker?(current_user))
+        = render partial: 'proposals/unblind', locals: { proposal: proposal }
+
     .col-md-4
       %h3 Speakers
       = render proposal.speakers

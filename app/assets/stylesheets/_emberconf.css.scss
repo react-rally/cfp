@@ -29,4 +29,29 @@
     }
   }
 
+  h3 {
+    text-decoration: underline;
+    margin-bottom: 1.5em;
+  }
+
+  .instructions {
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    padding: 5px;
+    background-color: #eee;
+  }
+
+  .form-submit {
+    border-top: none;
+  }
+
+  @media (min-width: 992px) {
+    fieldset.col-md-6:first-of-type {
+      padding-right: 5%;
+    }
+
+    fieldset.col-md-6:last-of-type {
+      padding-left: 5%;
+    }
+  }
 }

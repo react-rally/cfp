@@ -9,15 +9,3 @@
 %h3 Pitch
 .markdown{ data: { 'field-id' => 'proposal_pitch' } }
   =proposal.pitch
-
-- unless proposal.existing_talk.nil?
-  %h3 Have you given this talk before?
-  = proposal.existing_talk ? "Yes" : "No"
-
-- if proposal.custom_fields.any?
-  - proposal.proposal_data[:custom_fields].select do |key,value|
-    %h3= key.capitalize
-    %div
-    = value.capitalize
-    %div
-

@@ -131,6 +131,13 @@ ActiveRecord::Schema.define(version: 20151109195644) do
     t.datetime "updated_by_speaker_at"
     t.text     "proposal_data"
     t.boolean  "existing_talk"
+    t.text     "online_recordings"
+    t.string   "location"
+    t.string   "website"
+    t.string   "github"
+    t.string   "twitter"
+    t.string   "video_pitch"
+    t.string   "headshot"
   end
 
   add_index "proposals", ["event_id"], name: "index_proposals_on_event_id", using: :btree
