@@ -176,7 +176,8 @@ class Proposal < ActiveRecord::Base
   def update_and_send_notifications(attributes)
     old_title = title
     if update_attributes(attributes)
-      field_names = last_change.join(', ')
+      field_names = previous_changes.keys.join(', ')
+      return if field_names.blank?
 
       Notification.create_for(reviewers, proposal: self,
                               message: "Proposal, #{old_title}, updated [ #{field_names} ]")
@@ -201,7 +202,6 @@ class Proposal < ActiveRecord::Base
       update_tags(proposal_taggings, @tags, false)
     end
   end
-  @dont_touch_updated_by_speaker_at
 
   def save_review_tags
     if @review_tags
@@ -229,10 +229,10 @@ class Proposal < ActiveRecord::Base
     if updating_person && updating_person.organizer_for_event?(event) || @dont_touch_updated_by_speaker_at
       # Erase the record of last change if the proposal is updated by an
       # organizer
-      self.last_change = nil
+      #self.last_change = nil
     else
-      changes_whitelist = %w(pitch abstract details title)
-      self.last_change = changes_whitelist & changed
+      #changes_whitelist = %w(pitch abstract details title)
+      #self.last_change = changes_whitelist & changed
     end
   end
 

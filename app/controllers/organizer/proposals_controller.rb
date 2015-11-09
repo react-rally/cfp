@@ -58,7 +58,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def update
     if @proposal.update_without_touching_updated_by_speaker_at(proposal_params)
       flash[:info] = 'Proposal Updated'
-      redirect_to organizer_event_proposals_path(slug: @event.slug)
+      redirect_to [:organizer, event, @proposal]
     else
       flash[:danger] = 'There was a problem saving your proposal; please review the form for issues and try again.'
       render :edit

@@ -27,6 +27,11 @@ class ProposalDecorator < ApplicationDecorator
     h.number_with_precision(object.average_rating, precision: 1) || 'no average'
   end
 
+  def display_blind?(current_user)
+    object.speakers.map(&:person).include?(current_user) ||
+      current_user.organizer_for_event?(proposal.event)
+  end
+
   def score_for(person)
     person.rating_for(object).score
   end

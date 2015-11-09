@@ -15,17 +15,19 @@
           %li.proposal
             = proposal.public_state(small: true)
             = link_to proposal.title, proposal_path(slug: proposal.event.slug, uuid: proposal)
-            %p= truncate(proposal.abstract, length: 80)
-  .col-md-4.invitations
-    %h2 Invitations
-    %ul.unstyled
-      - invitations.each do |invitation|
-        %li
-          = invitation.state_label
-          = invitation.proposal.title
-          - if invitation.pending?
-            (
-            = invitation.refuse_button(small: true)
-            |
-            = invitation.accept_button(small: true)
-            )
+            %p= truncate(proposal.object.abstract, length: 200)
+
+  - if invitations.present?
+    .col-md-4.invitations
+      %h2 Invitations
+      %ul.unstyled
+        - invitations.each do |invitation|
+          %li
+            = invitation.state_label
+            = invitation.proposal.title
+            - if invitation.pending?
+              (
+              = invitation.refuse_button(small: true)
+              |
+              = invitation.accept_button(small: true)
+              )

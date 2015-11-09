@@ -21,7 +21,7 @@
     .col-md-12.tags= proposal.tags
 
   .row
-    .col-md-4
+    .col-md-8
       = render partial: 'proposals/contents', locals: { proposal: proposal }
 
       - if (proposal.has_speaker?(current_user))
@@ -32,25 +32,26 @@
       = render proposal.speakers
 
       - if (proposal.has_speaker?(current_user))
-        %h3 Invited Speakers
-        - invitations.each do |invitation|
-          .clearfix
-            %ul.invitation
-              %li
-                = invitation.state_label
-                = invitation.email
-                .pull-right
-                  = link_to 'Resend',
-                    resend_invitation_path(invitation_slug: invitation.slug),
-                    method: :post,
-                    class: 'btn btn-xs btn-primary',
-                    disabled: !invitation.pending?
-                  = link_to 'Remove',
-                    invitation_path(invitation_slug: invitation.slug),
-                    method: :delete,
-                    class: 'btn btn-xs btn-danger',
-                    disabled: !invitation.pending?,
-                    data: {confirm: 'Are you sure you want to remove this invitation?'}
+        - if invitations.present?
+          %h3 Invited Speakers
+          - invitations.each do |invitation|
+            .clearfix
+              %ul.invitation
+                %li
+                  = invitation.state_label
+                  = invitation.email
+                  .pull-right
+                    = link_to 'Resend',
+                      resend_invitation_path(invitation_slug: invitation.slug),
+                      method: :post,
+                      class: 'btn btn-xs btn-primary',
+                      disabled: !invitation.pending?
+                    = link_to 'Remove',
+                      invitation_path(invitation_slug: invitation.slug),
+                      method: :delete,
+                      class: 'btn btn-xs btn-danger',
+                      disabled: !invitation.pending?,
+                      data: {confirm: 'Are you sure you want to remove this invitation?'}
 
         = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-inline speaker' do
           %h3 Invite a Speaker
@@ -58,7 +59,7 @@
           %button.btn.btn-success(type="submit")
             %span.glyphicon.glyphicon-envelope
             Invite
-    .col-md-4
+
       %h3 Reviewer Activity
       %p
         = pluralize(proposal.ratings.count, 'review')

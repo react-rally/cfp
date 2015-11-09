@@ -18,4 +18,6 @@
             = proposal.update_state_link(Proposal::State::SUBMITTED)
       %li= proposal.delete_button
 %h1 Edit #{proposal.title} for #{event} as Organizer
-= render partial: 'form', locals: { proposal: proposal }
+
+= simple_form_for proposal, url: [ :organizer, event, proposal ] do |f|
+  = render partial: 'proposals/form', locals: { proposal: proposal, f: f }

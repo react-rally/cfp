@@ -1,4 +1,4 @@
-#emberconf #new_proposal {
+#emberconf #new_proposal, #emberconf .edit_proposal {
   span.radio {
     display: inline-block;
     min-height: auto;
@@ -53,5 +53,15 @@
     fieldset.col-md-6:last-of-type {
       padding-left: 5%;
     }
+  }
+}
+
+#emberconf {
+  dd {
+    margin-bottom: 1em;
+  }
+
+  .ratings_list dd {
+    margin-bottom: 0;
   }
 }
