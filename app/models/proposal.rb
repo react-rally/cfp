@@ -18,6 +18,7 @@ class Proposal < ActiveRecord::Base
 
   validates :title, :abstract, presence: true
   validates :abstract, length: {maximum: 600}
+  validates :existing_talk, inclusion: { in: [true, false], message: "Please specify whether you have given this talk before" }
 
   serialize :last_change
   serialize :proposal_data, Hash
@@ -256,13 +257,17 @@ end
 #  abstract              :text
 #  details               :text
 #  pitch                 :text
+#  last_change           :text
+#  confirmation_notes    :text
 #  confirmed_at          :datetime
 #  created_at            :datetime
 #  updated_at            :datetime
-#  last_change           :text
-#  confirmation_notes    :text
+#  new_talk              :boolean
+#  prior_experience      :text
+#  video_url             :string(255)
 #  updated_by_speaker_at :datetime
 #  proposal_data         :text
+#  existing_talk         :boolean
 #
 # Indexes
 #

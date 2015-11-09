@@ -1,4 +1,6 @@
 class ProposalsController < ApplicationController
+  include ApplicationHelper
+
   before_filter :require_event, except: :index
   before_filter :require_user
   before_filter :require_proposal, except: [ :index, :create, :new, :parse_edit_field ]
@@ -85,7 +87,6 @@ class ProposalsController < ApplicationController
     end
   end
 
-  include ApplicationHelper
   def parse_edit_field
     respond_to do |format|
       format.js do
@@ -100,7 +101,8 @@ class ProposalsController < ApplicationController
   private
 
   def proposal_params
-    params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, custom_fields: @event.custom_fields,
+    params.require(:proposal).permit(:title, {tags: []}, :abstract, :details, :pitch, :existing_talk,
+                                     custom_fields: @event.custom_fields,
                                      comments_attributes: [:body, :proposal_id, :person_id],
                                      speakers_attributes: [:bio, :person_id, :id])
   end

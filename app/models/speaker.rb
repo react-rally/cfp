@@ -17,12 +17,18 @@ end
 #
 # Table name: speakers
 #
-#  id          :integer          not null, primary key
-#  proposal_id :integer
-#  person_id   :integer
-#  bio         :text
-#  created_at  :datetime
-#  updated_at  :datetime
+#  id                  :integer          not null, primary key
+#  proposal_id         :integer
+#  person_id           :integer
+#  bio                 :text
+#  created_at          :datetime
+#  updated_at          :datetime
+#  website             :string(255)
+#  github              :string(255)
+#  twitter             :string(255)
+#  speaking_experience :string(255)
+#  headshot_url        :string(255)
+#  location            :string(255)
 #
 # Indexes
 #
