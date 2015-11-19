@@ -84,10 +84,6 @@ class Person < ActiveRecord::Base
     self.name.present? && self.email.present?
   end
 
-  def demographics_complete?
-    gender.present? && ethnicity.present? && country.present?
-  end
-
   def organizer?
     organizer_events.count > 0
   end
