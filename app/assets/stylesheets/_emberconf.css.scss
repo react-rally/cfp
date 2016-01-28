@@ -1,0 +1,70 @@
+#dinosaurjs #new_proposal, #dinosaurjs .edit_proposal {
+  span.radio {
+    display: inline-block;
+    min-height: auto;
+    margin: auto;
+    margin-right: 10px;
+    padding: inherit;
+    vertical-align: inherit;
+
+    input {
+      float: none;
+      margin: auto;
+      box-shadow: none;
+    }
+  }
+
+  .field_with_errors {
+    .form-control {
+      background-color: inherit;
+    }
+
+    span.help-block {
+      display: block;
+      border: 1px solid darken(#edd1d1, 50%);
+      color: darken(#edd1d1, 50%);
+      background-color: #edd1d1;
+      padding: 5px;
+      border-radius: 2px;
+    }
+  }
+
+  .proposal-column h3 {
+    margin-bottom: 1.5em;
+  }
+
+  .instructions {
+    border: 1px solid #bbb;
+    border-radius: 2px;
+    padding: 5px;
+    background-color: #eee;
+  }
+
+  .form-submit {
+    border-top: none;
+  }
+
+  @media (min-width: 992px) {
+    fieldset.col-md-6:first-of-type {
+      padding-right: 5%;
+    }
+
+    fieldset.col-md-6:last-of-type {
+      padding-left: 5%;
+    }
+  }
+}
+
+#dinosaurjs {
+  dd {
+    margin-bottom: 1em;
+  }
+
+  .ratings_list dd {
+    margin-bottom: 0;
+  }
+
+  span[title='required'] {
+    color: $yellow;
+  }
+}

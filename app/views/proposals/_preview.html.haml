@@ -1,0 +1,15 @@
+#proposal-preview.panel.panel-default{ data: { 'remote-url' => parse_edit_field_proposal_path(event.slug) } }
+  .panel-heading
+    %h2.panel-title Preview
+  .panel-body
+    %h3 Abstract
+    .markdown{ data: { 'field-id' => 'proposal_abstract' } }
+      = proposal.abstract
+
+    %h3 Details
+    .markdown{ data: { 'field-id' => 'proposal_details' } }
+      = proposal.details
+
+    %h3 Pitch
+    .markdown{ data: { 'field-id' => 'proposal_pitch' } }
+      =proposal.pitch

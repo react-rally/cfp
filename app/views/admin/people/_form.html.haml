@@ -1,0 +1,17 @@
+= form_for [:admin, person] do |f|
+  .row
+    %fieldset.col-md-12
+      %h2 Person
+      %p
+      .form-group
+        = f.label :name
+        = f.text_field :name, class: 'form-control', placeholder: 'Name'
+      .form-group
+        = f.label :email
+        = f.email_field :email, class: 'form-control', placeholder: 'Email address'
+      %p
+        = f.label :bio
+        = f.text_area :bio, class: 'form-control', placeholder: 'Bio', rows: 8
+
+  .row.col-md-12.form-submit
+    %button.pull-right.btn.btn-success{:type => "submit"} Save
