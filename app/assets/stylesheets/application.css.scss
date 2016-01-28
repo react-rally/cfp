@@ -1,3 +1,6 @@
+@import "colors";
+@import "dinosaurjs";
+
 // vendor styles
 @import "bootstrap";
 @import "jquery-ui";
@@ -21,4 +24,5 @@
 @import "badge";
 
 // local patches
+
 @import "emberconf";

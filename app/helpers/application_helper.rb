@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def title
     if @title.blank?
-      "CFPApp"
+      "Dinosaur.js Call for Proposals"
     else
       @title
     end
