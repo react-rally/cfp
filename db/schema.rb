@@ -125,9 +125,6 @@ ActiveRecord::Schema.define(version: 20151109195644) do
     t.datetime "confirmed_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "new_talk"
-    t.text     "prior_experience"
-    t.string   "video_url"
     t.datetime "updated_by_speaker_at"
     t.text     "proposal_data"
     t.boolean  "existing_talk"
@@ -203,12 +200,6 @@ ActiveRecord::Schema.define(version: 20151109195644) do
     t.text     "bio"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "website"
-    t.string   "github"
-    t.string   "twitter"
-    t.string   "speaking_experience"
-    t.string   "headshot_url"
-    t.string   "location"
   end
 
   add_index "speakers", ["person_id"], name: "index_speakers_on_person_id", using: :btree
