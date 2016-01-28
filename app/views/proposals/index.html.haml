@@ -1,9 +1,8 @@
-%h1 Your Dashboard
+%h1 Proposals
 .row
   .col-md-8.proposals
-    %h2 Proposals
     - if proposals.empty?
-      %h3 You don't have any proposals.
+      %p You don't have any proposals.
     - proposals.each do |event, talks|
       %h3
         = link_to event.name, event_path(event.slug)

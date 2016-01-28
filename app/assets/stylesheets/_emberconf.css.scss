@@ -1,4 +1,4 @@
-#emberconf #new_proposal, #emberconf .edit_proposal {
+#dinosaurjs #new_proposal, #dinosaurjs .edit_proposal {
   span.radio {
     display: inline-block;
     min-height: auto;
@@ -29,8 +29,7 @@
     }
   }
 
-  h3 {
-    text-decoration: underline;
+  .proposal-column h3 {
     margin-bottom: 1.5em;
   }
 
@@ -56,12 +55,16 @@
   }
 }
 
-#emberconf {
+#dinosaurjs {
   dd {
     margin-bottom: 1em;
   }
 
   .ratings_list dd {
     margin-bottom: 0;
+  }
+
+  span[title='required'] {
+    color: $yellow;
   }
 }

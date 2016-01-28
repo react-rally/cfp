@@ -1,16 +1,10 @@
 #proposal {
-  input#email { width: 80%; }
   select#rating_score {
     width: 4em;
     display: inline;
   }
 
   span {
-    &.status {
-      float: right;
-      display: block;
-      margin: .3em 6.5em .4em 0;
-    }
     &.small-status {
       float: right;
       font-size: 75%;
@@ -51,10 +45,6 @@ ul {
   }
 }
 
-.status.label {
-  font-size: 1.3em;
-}
-
 .twitter-share-button {
   margin-left: .5em;
   margin-top: 2.3em;
@@ -66,10 +56,6 @@ ul {
     float: left;
     margin-right: .5em;
   }
-}
-
-input#email {
-  width: 275px !important;
 }
 
 .btn.save-comment {

@@ -55,13 +55,15 @@
 
         = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-inline speaker' do
           %h3 Invite a Speaker
-          = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
-          %button.btn.btn-success(type="submit")
-            %span.glyphicon.glyphicon-envelope
-            Invite
+          .input-group
+            = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
+            %span.input-group-btn
+              %button.btn.btn-success(type="submit")
+                %span.glyphicon.glyphicon-envelope
+                Invite
 
       %h3 Reviewer Activity
-      %p
+      %p.proposal-review
         = pluralize(proposal.ratings.count, 'review')
         = proposal.public_state
 

@@ -1,10 +1,3 @@
-body {
-  padding-top: 60px;
-}
-.navbar {
-  height: 60px;
-}
-
 .alert {
   margin-top: 20px;
 }
@@ -12,7 +5,7 @@ body {
 .alert-viewer-mode {
   padding: 10px 0;
   margin-bottom: 20px;
-  background-color: lighten(#E69400, 25%);
+  background-color: $yellow, 25%;
   text-align: center;
 }
 
