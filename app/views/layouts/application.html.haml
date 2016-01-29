@@ -28,7 +28,11 @@
           - if event && event.slug
             = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
           - else
+<<<<<<< HEAD
             = link_to "Dinosaur.js Call for Proposals", events_path, class: 'navbar-brand'
+=======
+            = link_to "#{Rails.application.class.parent_name}", events_path, class: 'navbar-brand'
+>>>>>>> fe52df9582206cdc3320a0c550adbdd9220e6e5d
 
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
