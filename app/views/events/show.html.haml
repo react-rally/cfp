@@ -7,7 +7,7 @@
     .share.pull-right= event.tweet_button
   .col-md-8
     - if event.past_open? || event.open?
-      .markdown
+      .markdown.guidelines
         = markdown(event.guidelines)
     - elsif event.closes_at?
       %p
