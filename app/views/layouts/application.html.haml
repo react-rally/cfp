@@ -17,7 +17,7 @@
     /[if lt ie 9]
       = javascript_include_tag "/js/html5shiv.js"
       = javascript_include_tag "/js/respond.min.js"
-  %body#dinosaurjs
+  %body#reactrally
     .navbar.navbar-default
       .container
         .navbar-header
@@ -28,7 +28,7 @@
           - if event && event.slug
             = link_to event.name, event_path(slug: event.slug), class: 'navbar-brand'
           - else
-            = link_to "Dinosaur.js Call for Proposals", events_path, class: 'navbar-brand'
+            = link_to "React Rally Call for Proposals", events_path, class: 'navbar-brand'
 
         .collapse.navbar-collapse
           %ul.nav.navbar-nav
