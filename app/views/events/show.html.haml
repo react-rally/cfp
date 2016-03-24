@@ -25,8 +25,3 @@
             = time_ago_in_words(event.closes_at)
             left
           to submit your proposal!
-    - if event.proposals.count > 5
-      .stats
-        %h2 CFP Stats
-        = pluralize(event.proposals.count, 'proposal')
-        = event.line_chart
