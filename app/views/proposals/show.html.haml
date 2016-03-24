@@ -54,7 +54,7 @@
                       data: {confirm: 'Are you sure you want to remove this invitation?'}
 
         = form_tag invitations_path(proposal_uuid: proposal.uuid), class: 'form-inline speaker' do
-          %h3 Invite a Speaker
+          %h4 Add a co-presenter to this proposal
           .input-group
             = email_field_tag :email, '', placeholder: "Enter an email address.", class: 'form-control'
             %span.input-group-btn
