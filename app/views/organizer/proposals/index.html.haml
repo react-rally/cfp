@@ -12,18 +12,6 @@
       =link_to organizer_event_proposals_path(format: "csv"), id: "download_link", class: "btn btn-info" do
         %span.glyphicon.glyphicon-download-alt
         Download as CSV
-  -#.row
-    .col-sm-7.col-sm-offset-1
-      -if taggings_count.present?
-        - taggings_count.sort_by{|k,v| v}.reverse.each_slice(6).to_a.each do |row|
-          %ul#columns.list-inline
-            -row.each do |name, count|
-              %li
-                .label.label-success
-                  = name
-                  = count
-      -else
-        %p No Tags
   .row
     .col-md-12
       %small <em>Hint:</em> Hold <kbd>shift</kbd> and click sorting arrows to sort by multiple columns
