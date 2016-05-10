@@ -5,16 +5,21 @@ class Reviewer::ProposalsController < Reviewer::ApplicationController
   decorates_assigned :proposal, with: Reviewer::ProposalDecorator
 
   def index
-    proposal_ids = current_user.proposals.pluck(:id)
-
     proposals = @event.proposals.includes(:proposal_taggings, :review_taggings,
-      :ratings, :internal_comments, :public_comments).where.not(id: proposal_ids)
+      :ratings, :internal_comments, :public_comments).where(state: ["submitted", "soft waitlisted"])
+
+    proposal_ids = proposals.pluck(:id)
+
+    total_points = Rating
+      .where(proposal_id: proposal_ids, person_id: current_user.id)
+      .sum('score')
 
     proposals.to_a.sort_by! { |p| [ p.ratings.present? ? 1 : 0, p.created_at ] }
     proposals = Reviewer::ProposalDecorator.decorate_collection(proposals)
 
     render locals: {
-      proposals: proposals
+      proposals: proposals,
+      total_points: total_points
     }
 
   end

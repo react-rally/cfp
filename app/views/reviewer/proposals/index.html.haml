@@ -11,6 +11,8 @@
           %dd= event.proposals_rated_message
           %dt Unrated Proposals:
           %dd= event.proposals.unrated.count
+          %dt Total Points (<= 100)
+          %dd= total_points
   .row
     .col-md-10
       %small <em>Hint:</em> Hold <kbd>shift</kbd> and click sorting arrows to sort by multiple columns
