@@ -1,6 +1,5 @@
 class Reviewer::ProposalsController < Reviewer::ApplicationController
   skip_before_filter :require_proposal, only: :index
-  skip_before_filter :prevent_self, only: :index
 
   decorates_assigned :proposal, with: Reviewer::ProposalDecorator
 

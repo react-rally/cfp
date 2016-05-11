@@ -3,7 +3,6 @@ class Reviewer::ApplicationController < ApplicationController
   before_filter :require_reviewer
   before_filter :require_event
   before_filter :require_proposal
-  before_filter :prevent_self
 
   private
   def require_reviewer
