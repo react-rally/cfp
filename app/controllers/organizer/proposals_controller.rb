@@ -21,13 +21,27 @@ class Organizer::ProposalsController < Organizer::ApplicationController
   def index
     proposals = @event.proposals.includes(:event, :review_taggings, :proposal_taggings, :ratings, {speakers: :person}).load
 
+    submitted_proposal_ids = @event.proposals.includes(:proposal_taggings, :review_taggings,
+      :ratings, :internal_comments, :public_comments).where(state: ["submitted", "soft waitlisted"]).pluck(:id)
+
+    total_points = Rating
+      .where(proposal_id: submitted_proposal_ids, person_id: current_user.id)
+      .sum('score')
+
     session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
 
     taggings_count = Tagging.count_by_tag(@event)
 
     proposals = Organizer::ProposalsDecorator.decorate(proposals)
     respond_to do |format|
-      format.html { render locals: {event: @event, proposals: proposals, taggings_count: taggings_count} }
+      format.html {
+        render locals: {
+          event: @event,
+          proposals: proposals,
+          taggings_count: taggings_count,
+          total_points: total_points
+        }
+      }
       format.csv { render text: proposals.to_csv }
     end
   end
