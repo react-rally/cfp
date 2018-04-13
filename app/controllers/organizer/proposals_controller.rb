@@ -25,7 +25,7 @@ class Organizer::ProposalsController < Organizer::ApplicationController
       :ratings, :internal_comments, :public_comments).where(state: ["submitted", "soft waitlisted"]).pluck(:id)
 
     total_points = Rating
-      .where(proposal_id: submitted_proposal_ids, person_id: current_user.id)
+      .where(proposal_id: submitted_proposal_ids, person_id: current_user.id, state: ["submitted", "soft waitlisted"])
       .sum('score')
 
     session[:prev_page] = {name: 'Proposals', path: organizer_event_proposals_path}
