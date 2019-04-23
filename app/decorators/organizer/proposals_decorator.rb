@@ -1,7 +1,7 @@
 class Organizer::ProposalsDecorator < Draper::CollectionDecorator
   def to_csv
     CSV.generate do |csv|
-      columns = %w[ id uuid state average_rating review_taggings speaker_name title
+      columns = %w[ id uuid state average_rating review_taggings speaker_name website github twitter headshot title
         abstract details pitch bio created_at updated_at confirmed_at ]
 
       csv << columns
